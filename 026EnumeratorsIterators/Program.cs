@@ -1,8 +1,5 @@
-﻿using System.Collections;
-
-namespace _026EnumeratorsIterators
+﻿namespace _026EnumeratorsIterators
 {
-
     class Program
     {
         static void Main(String[] args)
@@ -25,12 +22,30 @@ namespace _026EnumeratorsIterators
             //
             //
             //var ints = new FiveIntegers(1, 2, 3, 4, 5);
-            //foreach(var i in ints)
+            //foreach (var i in ints)
             //{
-            //    Console.WriteLine(i);   
+            //    Console.WriteLine(i);
             //}
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
 
-
+            var temps = new List<Tempreture>();
+            Random rnd = new Random();
+            for (var i = 0; i < 100; i++)
+            {
+                temps.Add(new Tempreture(rnd.Next(-30, 50)));
+            }
+            temps.Sort();
+            foreach (var item in temps)
+            {
+                Console.WriteLine(item.Value);
+            }
             Console.ReadKey();
         }
     }
@@ -51,7 +66,6 @@ namespace _026EnumeratorsIterators
                 && this.Name == emp.Name
                 && this.Salary == emp.Salary
                 && this.Department == emp.Department;
-
         }
 
         public override int GetHashCode()
@@ -67,37 +81,47 @@ namespace _026EnumeratorsIterators
         public static bool operator ==(Employee lhs, Employee rhs) => lhs.Equals(rhs);
         public static bool operator !=(Employee lhs, Employee rhs) => !lhs.Equals(rhs);
     }
+
     //class FiveIntegers : IEnumerable
     //{
     //    int[] _values;
 
     //    public FiveIntegers(int n1, int n2, int n3, int n4, int n5)
     //    {
-    //        _values = new[] {n1,n2,n3,n4,n5};  
+    //        _values = new[] { n1, n2, n3, n4, n5 };
     //    }
 
-    //    public IEnumerable GetEnumerator() => new Enumerator(this);
-
-    //    class Enumerator : IEnumerator
+    //    public IEnumerable GetEnumerator()
     //    {
-    //        int currentIndex = -1;
-    //        FiveIntegers _itegers;
-    //        public Enumerator(FiveIntegers itegers) 
-    //        { 
-    //            _itegers = itegers;
-    //        }
-
-    //        public object Current => throw new NotImplementedException();
-
-    //        public bool MoveNext()
+    //        foreach (var item in _values)
     //        {
-    //            throw new NotImplementedException();
-    //        }
 
-    //        public void Reset()
-    //        {
-    //            throw new NotImplementedException();
+    //            yield return item;
     //        }
     //    }
+
+    //    IEnumerator IEnumerable.GetEnumerator()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
+
+    class Tempreture : IComparable
+    {
+        private int _value { get; set; }
+        public Tempreture(int value)
+        {
+            _value = value;
+        }
+        public int Value => _value;
+
+        public int CompareTo(object obj)
+        {
+            if (obj is null) return 1;
+            var temp = obj as Tempreture;
+            if (temp is null) throw new ArgumentException("Oject is not a temp obj");
+            return this._value.CompareTo(temp._value);
+        }
     }
-//}
+
+}
